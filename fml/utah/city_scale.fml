@@ -1,0 +1,36 @@
+
+// objects approximately as big as a large city
+
+//include="village_scale.fml"
+
+rule=groupr
+    name=city_desert
+    numpropogates=infinity
+
+    groupmember=rule=roughr
+        roughness=.02
+    /rule
+
+    groupmember=rule=colorshiftr
+        shiftamount=.1
+        stayamount=.05
+        red=.8
+        green=.8
+        blue=.5
+    /rule
+
+/rule
+
+rule=groupr
+    name=city_mountain
+    numpropogates=infinity
+
+    groupmember=rule=altituder
+        
+        threshold1=.01
+        threshold2=.01
+  //      groupmember=village_mountain_low
+    //    groupmember=village_mountain_high
+    /rule
+/rule   
+

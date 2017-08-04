@@ -1,0 +1,18 @@
+
+// Ocean
+rule=colorshiftr
+	name=oceancolor
+	numpropogates=infinity
+	stayamount=.9
+	shiftamount=.05
+	stayred=0.1
+	staygreen=0.3
+	stayblue=0.9
+/rule
+
+rule=groupr
+    name=oceanFarOut
+    numpropogates=infinity
+    groupmember=oceancolor
+/rule
+

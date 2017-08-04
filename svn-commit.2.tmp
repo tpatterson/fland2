@@ -1,0 +1,9 @@
+adding monor
+--This line, and those below, will be ignored--
+
+D    fland
+AM   backup.zip
+M    fmlparser.cpp
+A    monor.h
+M    groupr.cpp
+AM   before_monor.zip

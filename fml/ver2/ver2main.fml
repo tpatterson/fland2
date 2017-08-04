@@ -1,0 +1,27 @@
+
+include="ocean.fml"
+include="continent.fml"
+
+
+
+rule=groupr
+	name=worldBase
+	numpropogates=1
+
+	groupmember=rule=averager
+		name=theAverageRule
+		numpropogates=infinity
+	/rule
+
+    groupmember=rule=patternr
+        //childrule=oceanFarOut
+        threshold1 = 0.0
+        threshold2 = 0.01
+        numpropogates = 0
+        size = 5.0
+        groupmember=oceanFarOut
+        groupmember=continent0
+    /rule
+    
+/rule
+

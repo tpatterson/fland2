@@ -1,0 +1,61 @@
+
+
+// Continent
+rule=colorshiftr
+	name=continentcolor
+	numpropogates=0
+	stayamount=.9
+	shiftamount=.05
+	stayred=0.25
+	staygreen=0.7
+	stayblue=0.05
+/rule
+
+rule=groupr
+    name=continent2
+    numpropogates=50
+    groupmember=continentcolor
+    groupmember=rule=roughr
+        roughness=.2
+        uppull=.2
+    /rule
+/rule
+
+include="desert.fml"
+include="greenland.fml"
+
+rule=groupr
+    name=continent1
+    numpropogates=200
+    //childrule=continent2
+    groupmember=greenlandColor
+    groupmember=rule=patternr
+        childrule=oceanFarOut
+        threshold1 = 0.0
+        threshold2 = 0.01
+        size = 5
+        groupmember=oceanFarOut
+        groupmember=rule=patternr
+            size=10
+            threshold1=0.0
+            threshold2=0.2
+            groupmember=desert0
+            groupmember=greenland0
+        /rule
+    /rule
+    groupmember=rule=roughr
+        roughness=.1
+        uppull=.1
+    /rule
+/rule
+
+rule=groupr
+    name=continent0
+    childrule=continent1
+    groupmember=continentcolor
+    groupmember=rule=roughr
+        roughness=.00
+        uppull=.00
+    /rule
+/rule
+

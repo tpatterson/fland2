@@ -1,0 +1,27 @@
+LDFLAGS = ``
+CFLAGS = `` -g
+CPP = g++
+SRCS = src/trogframe.h src/trogframe.cpp src/splash.cpp src/splash.h src/trogdor.cpp \
+	src/downloadthread.cpp src/downloadthread.h src/trogdor.h 
+OBJS = build/trogframe.o build/splash.o build/trogdor.o build/downloadthread.o 
+
+all: compile
+
+build/%.o: src/%.cpp
+	$(CPP) $(CFLAGS) -c $< -o $@
+
+compile: dirs $(OBJS)
+	$(CPP) -pthread -lglut -o fland $(CFLAGS) $(OBJS) $(LDFLAGS)
+
+dirs:
+	-mkdir build
+
+#run: compile
+#	gdb ./trogdor
+
+run: compile
+	./fland
+
+clean:
+	-rm -rf build
+	-rm trogdor

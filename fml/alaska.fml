@@ -1,0 +1,27 @@
+// Alaska Summer
+
+rule=groupr
+	name=alaskabase
+	numpropogates=20
+
+	groupmember=rule=averager
+		name=theAverageRule
+		numpropogates=infinity
+	/rule
+
+	groupmember=rule=roughr
+		name=theRoughRule
+		roughness=0.2
+		numpropogates=0
+	/rule
+
+	groupmember=rule=altituderxslope
+		name=theAltitudeRule
+		threshold1=.02
+		threshold2=.03
+		numpropogates=0
+		// the two rules that will depend on the altitude
+		groupmember=notsnow
+		groupmember=snow
+	/rule
+/rule

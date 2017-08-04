@@ -1,0 +1,159 @@
+
+// snow
+rule=colorshiftr
+	name=snowcolor
+	numpropogates=0
+	stayamount=.8
+	shiftamount=.05
+	stayred=1.0
+	staygreen=1.0
+	stayblue=1.0
+/rule
+rule=groupr
+	name=closesnow
+	numpropogates=infinity
+	groupmember=snowcolor
+
+	groupmember=rule=roughr
+		name=snowRoughR
+		roughness=0.1
+	/rule
+/rule
+rule=groupr
+	name=snow
+	numpropogates=0
+	childrule=closesnow
+	groupmember=snowcolor
+/rule
+
+// MOUNTAIN
+rule=colorshiftr
+    name=mountaincolor
+    numpropogates=0
+    stayamount=0.8
+    shiftamount=0.05
+    stayred=0.1
+    staygreen=0.9
+    stayblue=0.2
+/rule
+rule=groupr
+    name=mountain
+    numpropogates=infinity
+    groupmember=mountaincolor
+    groupmember=rule=roughr
+        roughness=0.2
+        uppull=0.2
+    /roughr
+/rule
+
+include="cliffs.fml"
+
+
+// plains
+rule=colorshiftr
+	name=plainscolor
+	numpropogates=0
+	stayamount=.7
+	shiftamount=.01
+	stayred=.6
+	staygreen=.5
+	stayblue=.2
+/rule
+rule=groupr
+	name=plainsclose
+	numpropogates=infinity
+	groupmember=plainscolor
+	groupmember=rule=roughr
+		numpropogates=infinity
+		roughness=.05
+	/rule
+/rule
+rule=groupr
+	name=plains
+	childrule=plainsclose
+	numpropogates=0
+	groupmember=plainscolor
+/rule
+
+// notsnow
+rule=sloper
+	name=notsnow
+	threshold1=.3
+	threshold2=.4
+	numpropogates=0
+	groupmember=plains
+	groupmember=cliff
+/rule
+
+// a mountainous terrain
+rule=groupr
+    name=mountainous
+    numpropogates=infinity
+
+    groupmember=rule=roughr
+        roughness=0.2
+        numpropogates=0
+    /rule
+
+    groupmember=plainscolor
+/rule
+
+rule=groupr
+    name=continent5
+    numpropogates=infinity
+
+    groupmember=rule=averager
+    /rule
+
+    groupmember=rule=patternr
+        threshold1 = 0.0
+        threshold2 = 0.1
+        numpropogates = infinity
+        size = 5.0
+        groupmember=mountain
+        groupmember=plains
+    /rule
+/rule
+
+// the base rule of continent
+rule=groupr
+	name=continentBase
+	numpropogates=2 // fix this back to 5
+    childrule=continent5
+
+	groupmember=rule=averager
+		name=theAverageRule
+		numpropogates=infinity
+	/rule
+
+    // TODO: Make patternr generate the lookups the same
+    // way for every patternr
+    groupmember=rule=patternr
+        threshold1 = 0.0
+        threshold2 = 0.1
+        numpropogates = 0
+        size = 5.0
+        groupmember=mountaincolor
+        groupmember=plainscolor
+    /rule
+    
+//	groupmember=rule=roughr
+//		name=theRoughRule
+//		roughness=0.1
+//       uppull=0.0
+//		numpropogates=0
+//	/rule
+//
+//    // 
+//	groupmember=rule=altituder
+//	name=theAltitudeRule
+//		threshold1=.02
+//		threshold2=.03
+//		numpropogates=0
+//		// the two rules that will depend on the altitude
+//		groupmember=notsnow
+//		groupmember=snow
+//	/rule
+
+/rule
+

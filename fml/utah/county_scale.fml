@@ -1,0 +1,106 @@
+
+// Objects viewed from way out - the size of a county
+
+include="city_scale.fml"
+
+rule=groupr
+    name=county_desert_flats
+    
+    groupmember=rule=colorshiftr
+        stayamount=1
+        shiftamount=.05
+        red=.9
+        green=.9
+        blue=.8
+    /rule
+/rule
+
+rule=groupr
+    name=county_desert_rough
+    
+    groupmember=rule=roughr
+        roughness=.1
+    /rule
+
+    groupmember=rule=colorshiftr
+        stayamount=1
+        shiftamount=.05
+        red=.9
+        green=.8
+        blue=.6
+    /rule
+
+/rule
+
+rule=groupr
+    name=county_desert_1
+    numpropogates=infinity
+
+    groupmember=rule=patternr
+        threshold1 = 0.0
+        threshold2 = 0.0
+        size = 8.0
+        groupmember=county_desert_flats
+        groupmember=county_desert_rough
+    /rule
+
+/rule
+
+rule=groupr
+    name=county_desert
+    numpropogates=1
+    childrule=county_desert_1
+    
+    groupmember=rule=colorshiftr
+        stayamount=.9
+        shiftamount=.01
+        red=.8
+        green=.8
+        blue=.5
+    /rule
+
+/rule
+
+rule=groupr
+    name=county_mountain
+    
+    numpropogates=0
+    childrule=city_mountain
+
+    groupmember=rule=roughr
+        roughness=.05
+        uppull=.025
+    /rule
+
+    groupmember=rule=colorshiftr
+        stayamount=.9
+        shiftamount=.01
+        red=.6
+        green=.8
+        blue=.3
+    /rule
+
+/rule
+
+rule=groupr
+    name=county_scale
+    numpropogates = 0
+
+    groupmember=rule=averager
+        numpropogates=infinity
+    /rule
+
+    groupmember=rule=roughr
+        roughness=.0
+    /rule
+
+    groupmember=rule=patternr
+        threshold1 = -0.3
+        threshold2 = -0.25
+        size = 5.0
+        groupmember=county_mountain
+        groupmember=county_desert
+    /rule
+
+/rule
+

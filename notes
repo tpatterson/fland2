@@ -1,0 +1,224 @@
+There are two ways to compile:
+./makeIncludesCpp.pl; g++ -pthread -lglut includecpps.cpp -ofland
+- OR -
+./makeIncludesMake.pl; make
+The perl scripts at the beginning rebuild the lists of source files automatically, so that if they change you
+dont need to do anything about it.
+
+
+Note: Each rule applies to a certain type of object.
+
+//When an entity is split, The random number generator is seeded. Then
+//the first random numbers go, one each, to the seeds of it's special children.
+//Then they
+
+// tclear; g++ main.cpp -lGL -lGLU -lglut -ofland2
+// NOTE: tclear is not necessary, it just clears the screen.
+
+// NOTE: the mouseWheel ( and many other good things ) are set in /etc/X11/XF86Config-4
+
+BUG!!! There is a problem in that the verticies are mirrored about the center point.
+I voodoo fixed it by negating the calc distance equation in BaseEnt::calcVisibility
+it probably needs fixing later. Good luck!
+Fix: I think the rotation and movement math code is mirrored. Look it over and use your head instead of just
+	"tweak it until it works"
+	I think it has to do with my personal rotation code being messed up.
+
+NOTE: to compile the thing do this:
+g++ -pthread main.cpp -lGL -lGLU -lglut -ofland
+
+
+
+NOTE: calling tNew() is equivelant to calling new, and then the constructor.
+tNew just reuses old verticies.
+Calling destructor() is the same as deleteing the object, it calles tDelete().
+
+NOTE: there appears a small amount of "popping" when verticies are created.
+this is because the normals are interpolated linearly, but lighting calculations
+are not linear. To fix this we'll have to do the lighting calculations ourselves,
+and then interpolate between lit colors. This will be linear.
+
+TODO:
+trees
+	branch object
+	tree rules
+		meRule
+		splitRule
+		cylinder
+	Figure out smooth skinning
+different rule types
+	patch
+fix morphing problem when zoomed in too far
+make rules so you can have looping rules (define rules as many times as you want)
+make rules so they can "fade" between verticies
+make entity detail non-flat meaning that as you zoom into one place, the far off things get less detailed.
+	this will save on frameRate. Make the way far stuff disappear into the fog.
+make entities have some new parameters (altitude, slope, etc...) and a patch rule that uses them.
+
+// for now...
+patchR will store a tileable bitmap. To use different patches, just use a different
+bitmap.
+
+NOTE: if on an edge between two regions, dont blend between them.
+
+		mountainTerain ( x iterations, meRule )
+			me
+				roughR
+			split - children have...
+				roughR
+
+		plainsTerain
+			me
+				nurbR
+			split
+				nurbR
+
+
+
+utah
+	patch
+		mountainTerain
+		plainsTerain
+
+
+NOTE: A mountain rule keeps applying until it gets down to a certain size.
+Then some of it's children turn to rocks, some to medows, some to forests.
+
+Therefore instead of
+bool shouldPropogate() function, we need a
+BaseRule* propogate() function that returns the rule that
+propogates.
+
+
+
+each rule propogates for a certain number of iterations ( can be infinite )
+when that limit is reached, it stops propogating and a new rule ( can be NULL )
+starts from there.
+IE- When an entity splits, each of it's rules check to see if they have reached
+thier limit. If not, they propogate to the entity's children, if they have
+reached thier limit thier new rule type propogates.
+
+WHAT IF: In patch rules there is a rule type called border. It applies
+to the border between the different patches, but not in the middle
+
+
+
+
+WHAT IF: every entity's root rule is the only one that decides weather or not it will
+propogate to children entities?
+-No, because a sphere will need a rule for roundness, and a rule for the surface.
+WHAT IF: all the entity's rules check themselves, but only one level deep. For
+example, the sphereRule will go for a certain number of iterations, and the
+globeRule will for a different number. But, the globe Rule wont check any of it's
+groupMembers.
+-Lets do it!
+
+
+WHAT IF: each entity has a pointer to a group rule, instead of a list of rules.
+then we wont have to write all the special code twice.
+
+
+
+CURRENT PROBLEM: the planeR is propogating to the mesh's verticies. Dosn't work on verticies! - FIXED
+
+
+As of Fri Nov 01 11:29:47 AM MST 2002 there are about 5728 lines of code in this program!
+
+CURRENT PROBLEM:
+	If the "propogateaswhole" variable in a grouprule is set to false, meaning the grouprule acts just like a
+	container of individual rules, instead of a rule in itself, it dosn't propogate right. I was onto the problem
+	in groupr::propogateRule, uncoment the LNs. Also, in main.fml, if you make the testt rule the childrule
+	of the base rule, propogateAsWhole messes things up. I dont know why, but maybe this is a clue.
+
+
+TODO:
+	- We need a good way to test what is going on - perhaps a better version of dump object parameters
+		- Currently updating toString to take an optional parameter of indent depth, and return a string
+		instead of printing it to cout.
+		- make sure dump() propogates iteration depth correctly
+
+
+
+	-in baseent (search for TODO) calculate realistically the bounding sphere size, dont just divide by two.
+
+	-Just made printGeneology. Trying to figure out why when you zoom all the way out the mesh gets stuck
+	and doesn't split anymore.
+		-Voodoo fixed it by not letting meshes unsplit. (undid this to try to find the root of the problem.
+		The voodoo fix can be done in specialUnsplitCheck in Mesh.)
+
+*** Tis was propogateRule before I redid it. Just saving it.
+// this function is called on a groupr when it's client is being split. It create the new rules that
+// the client's children should have, and returns a pointer to the new rule.
+// TODO: extend this rule so that if propogateAsWhole is set to false it will
+// manually add pointers into the new client's rules, and then return null.
+BaseRule* GroupR::propogateRule( BaseEnt* inClient )
+{
+//cout << inClient << endl;
+//cout << toString( 0 );
+//LN
+//cout << fmlName << propogateAsWhole;LN
+	if( propogateAsWhole ) // This groupR is in control of propogation for the whole group
+	{
+		//toString();LN
+
+		if( getNumPropogates( inClient ) < numPropogates ) // not done propogating yet
+		{
+			return this;
+		}
+		else // this rule is done propogating, start using the new rule.
+		{
+			//LN
+			//cout << childRule;LN
+			// This groupRule is done propogating. Return the new rule that should take over.
+			BaseRule* nRule = childRule->makeOneOfMe( inClient );
+			return nRule;
+		}
+		//LN
+	}
+	else // this groupR is just a container for a bunch of individual rules.
+	{
+		//LN
+		// Each rule propogates individually. Create a new groupRule and put each rule
+		// into it individually.
+		// create the new groupRule
+		//LN this->toString();
+
+		// is this our segfault?
+		// not populating this var?
+		//BaseRule* nrp = reuseGroupR.tNew( inClient );
+
+		// TODO OPTIMISATION: make it so that instead of creating a new groupr every time
+		// it just uses the same one. Nevermind, this wont work.
+
+
+		// this is the old way
+		/*
+					BaseRule* nrp = this->makeOneOfMe( inClient );
+
+					// do some cleaning checks
+					if( GROUPR(nrp)->size() == 0 )// if the new groupRule is blank, return nothing.
+					{
+						return NULL;
+					}
+					// if there is only one rule in the groupRule, get rid of the groupRule and
+					// return the rule itself.
+					if( GROUPR(nrp)->size() == 1 )
+					{
+						BaseRule* brp; // (BaseRulePointer, not BrentReidPatterson)
+						brp = GROUPR(nrp)->groupMember[0];
+						reuseGroupR.tDelete( nrp );
+						return brp;
+					}
+					return nrp;
+		*/
+
+
+		for( int i=0; i<size(); i++ )
+		{
+			inClient->rule.addRule( groupMember[i]->propogateRule( inClient ) );
+		}
+		return( NULL );
+
+
+	}
+}
