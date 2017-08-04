@@ -16,7 +16,6 @@ using namespace std;
 #include "roughr.h"
 #include "colorshiftr.h"
 #include "drules.h"
-#include "monor.h"
 #include "main.h"
 
 
@@ -29,7 +28,7 @@ FmlParser::FmlParser( string inStartFile )
 	cout << "Parsing " << inStartFile << endl;
 
 	startFile = inStartFile;
-	parseFile( startFile, FML_FOLDER );
+	parseFile( startFile );
 
 	// check for a rule named "root"
 	if( !nameMap[ ROOT_RULE_NAME ] )
@@ -62,10 +61,14 @@ FmlParser::~FmlParser()
 }
 
 // this gets called on main.fml, and every file that is included
-int FmlParser::parseFile( string inFile, string folder )
+int FmlParser::parseFile( string inFile )
 {
-	TextFile file( inFile, folder );
 
+	// add the FML folder to the fileName ( defined in defines.h )
+	inFile = FML_FOLDER + inFile;
+
+	TextFile file( inFile );
+//return 0;
 	if( !file.loaded() )
 	{
 		return 1;
@@ -182,7 +185,7 @@ string FmlParser::evaluateToken( string token, string inputVal, TextFile* file, 
 	}
 	else if( token == "include" )
 	{
-		parseFile( inputVal, file->folder );
+		parseFile( inputVal );
 	}
 	else if( token == "rule" )
 	{
@@ -284,10 +287,6 @@ string FmlParser::evaluateRule( string inputVal, TextFile *file )
 	{
 		rptr = new AverageR;
 	}
-	else if( inputVal == "patternr" )
-	{
-		rptr = new PatternR;
-	}
 	else if( inputVal == "altituder" )
 	{
 		rptr = new AltitudeR;
@@ -296,10 +295,6 @@ string FmlParser::evaluateRule( string inputVal, TextFile *file )
 	{
 		rptr = new SlopeR;
 	}
-    else if( inputVal == "monor" )
-    {
-        rptr = new MonoR;
-    }
 	else if( inputVal == "altitudexslope" || inputVal == "slopexaltitude" )
 	{
 		rptr = new SlopeXAltitudeR;

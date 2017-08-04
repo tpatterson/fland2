@@ -9,40 +9,6 @@
 #include "drules.h"
 
 //////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////// PATTERN //////////////////////////////////////
-// inClient HAS to be a vertex!
-intensityType PatternR::getSecondRegionIntensity( BaseEnt* inClient )
-{
-	intensityType n;
-    n = noise.multipleNoise( size, 3, 
-            VERT( inClient )->getX(), 
-            VERT( inClient )->getY(), 
-            VERT( inClient )->getZ(),
-            0.3 );
-	
-    return( convertRange1ToRange2( n, threshold1, threshold2, (intensityType)0.0, (intensityType)1.0 )  );
-}
-
-PatternR::PatternR()
-	:DescriminatoryR()
-{
-    size = 1.0;
-}
-
-string PatternR::assignValue( string valueType, istringstream *value, FmlParser* fPtr )
-{
-	if( valueType == "size" )
-	{
-		*value >> size;
-	}
-	else
-	{
-		return DescriminatoryR::assignValue( valueType, value, fPtr );
-	}
-	return "";
-}
-
-//////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////// ALTITUDE //////////////////////////////////////
 // inClient HAS to be a vertex!
 intensityType AltitudeR::getSecondRegionIntensity( BaseEnt* inClient )

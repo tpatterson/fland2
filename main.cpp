@@ -18,7 +18,7 @@ using namespace std;
 #include "defines.h"
 #include "main.h"
 #include "camera.h"
-#include "perlinnoise.h"
+
 
 
 // callback functions for event handling.
@@ -42,7 +42,6 @@ int main(int argc, char** argv)
 // are all set up.
 int initProgram()
 {
-    PerlinNoise::initalize();
 	new Fland( 1 );
 	return 0;
 }

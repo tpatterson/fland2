@@ -5,6 +5,7 @@ using namespace std;
 
 #include "defines.h"
 #include "rendervertex.h"
+#include "groupr.h"
 #include "templates.h"
 
 class BaseRule;

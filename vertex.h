@@ -15,9 +15,6 @@ using namespace std;
 
 #define NUM_AFFECT_VERTICIES 4
 
-extern vector<RenderVertex> vertexArray;
-extern vector<GLuint> vertexArrayIndexList;
-
 //#define LEFT 0;
 //#define RIGHT 1;
 
@@ -48,22 +45,16 @@ class Vertex : public BaseEnt
 	BaseEnt* affectVertex[NUM_AFFECT_VERTICIES];
 	double affectAmount[NUM_AFFECT_VERTICIES];
 
-    GLuint vertexArrayIndex;
-
-	///////////////////////////////////////////////////////////////////////////
-	// the functions
-
-
 	// EXTRAS. These parameters dont apply to the actual workings of the vertex, but
 	// how some rules (will) work with them.
 	// Certain rules (will) use these values
 	//QUARD_TYPE u, v;
 	inline QUARD_TYPE getAltitude();
-    inline QUARD_TYPE getX();
-    inline QUARD_TYPE getY();
-    inline QUARD_TYPE getZ();
 	inline float getSlope();
 	//QUARD_TYPE slope;
+
+	///////////////////////////////////////////////////////////////////////////
+	// the functions
 
 	// calculate a vertex's children's normals, based on the vertex's neighbors.
 	void calcNormals();
@@ -129,21 +120,18 @@ class Vertex : public BaseEnt
 	// of a vertex's newly created children
 	void calcStartMorph();
 
-    inline void addIndexToVertexArrayIndexList();
 
 };
 
-
-float Vertex::getSlope(){ return acos( trueVertex.ny ) * ( 1.0 / ( PI / 2.0 ) ); }
-QUARD_TYPE Vertex::getAltitude() { return trueVertex.y; }
-QUARD_TYPE Vertex::getX() { return trueVertex.x; }
-QUARD_TYPE Vertex::getY() { return trueVertex.y; }
-QUARD_TYPE Vertex::getZ() { return trueVertex.z; }
-
-void Vertex::addIndexToVertexArrayIndexList()
+QUARD_TYPE Vertex::getAltitude()
 {
-    vertexArrayIndexList.push_back( vertexArrayIndex );
+	return trueVertex.y;
 }
+float Vertex::getSlope()
+{
+	return acos( trueVertex.ny ) * ( 1.0 / ( PI / 2.0 ) );
+}
+
 
 #endif
 

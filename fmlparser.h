@@ -37,7 +37,7 @@ class FmlParser
 	string startFile;
 
 	// parses a file
-	int parseFile( string fileName, string folder="" );
+	int parseFile( string fileName );
 
 	// cleans out whitespace and coments
 	void cleanLine( string& );

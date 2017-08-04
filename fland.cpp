@@ -19,8 +19,6 @@ using namespace std;
 #include "defines.h"
 
 Fland* Fland::fland;
-extern vector<RenderVertex> vertexArray;
-extern vector<GLuint> vertexArrayIndexList;
 
 void Fland::dumpObjectsToFile( string fileName )
 {
@@ -204,7 +202,6 @@ int Fland::draw()
 	//camera->near = 0.001;
 	//camera->far = 10;
 	camera->printFrustum();
-
 
 	if( firstEnt )
 	{

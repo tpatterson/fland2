@@ -117,7 +117,6 @@ void BaseRule::propogateChildren( BaseEnt* newEnt, intensityType nIntensity )
 	}
 }
 
-
 void BaseRule::destructor( bool willDelete )
 {
 

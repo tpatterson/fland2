@@ -2,12 +2,7 @@
 #define GLUTENV_H
 
 using namespace std;
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-#include <vector>
+#include "glut.h"
 
 #include "main.h"
 #include "events.h"

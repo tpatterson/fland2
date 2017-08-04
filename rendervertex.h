@@ -5,13 +5,7 @@
 using namespace std;
 
 #include <string>
-
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
+#include "glut.h"
 #include "defines.h"
 #include "camera.h"
 #include "fland.h"
@@ -35,16 +29,16 @@ inline void BoundSphere::initalize()
 class RenderVertex
 {
 	public:
-	GLfloat x, y, z;
-	GLfloat red, green, blue;
-	GLfloat nx, ny, nz; // normals
-	//bool isDeleted; // debug
+	QUARD_TYPE x, y, z;
+	float red, green, blue;
+	NORMAL_TYPE nx, ny, nz; // normals
+	bool isDeleted; // debug
 
 	RenderVertex();
 	//void operator=( const RenderVertex& );
 	inline void initalize();
 
-//	void printVertex();
+	void printVertex();
 	inline void interpolate( const RenderVertex &start, const RenderVertex &end, double amount);
 	inline RenderVertex operator*( double );
 	inline void operator+=( const RenderVertex& );

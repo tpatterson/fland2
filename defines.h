@@ -6,8 +6,8 @@ using namespace std;
 
 
 // INITALIZATION STUFF //
-#define DEFULT_WINDOW_WIDTH 1600 / 2
-#define DEFULT_WINDOW_HEIGHT 1200 / 2
+#define DEFULT_WINDOW_WIDTH 1100 / 2
+#define DEFULT_WINDOW_HEIGHT 900 / 2
 
 
 // spliting stuff
@@ -45,6 +45,11 @@ using namespace std;
 // the type of normals in this program
 #define NORMAL_TYPE double
 
+// some debug stuff
+// output the file and Line Number
+#define LN cout << " " << __FILE__ << " " << __LINE__ << endl;
+#define WAIT( x ) double a=getElapsedTime(); while( getElapsedTime() < a+x ){}
+
 // Just so I dont have to type the dynamic cast all the time
 #define VERT( x ) dynamic_cast< Vertex* >( x )
 #define MSEED( x ) dynamic_cast< MeshSeed* >( x )
@@ -55,7 +60,6 @@ using namespace std;
 #define PATCHR( x ) dynamic_cast< PatchR* >( x )
 #define BASER( x ) dynamic_cast< BaseRule* >( x )
 #define SLOPER( x ) dynamic_cast< SlopeR* >( x )
-#define MONOR( x ) dynamic_cast< MonoR* >( x )
 
 // Some camera stuff
 // When you move the mouse, this is the number of degrees that the view changes

@@ -8,7 +8,7 @@
 using namespace std;
 
 #include <sstream>
-#include <GL/glut.h>
+#include "glut.h"
 #include "tyler.h"
 #include "rendervertex.h"
 #include "baseent.h"
@@ -16,11 +16,7 @@ using namespace std;
 #include "main.h"
 #include "vertex.h"
 #include "fland.h"
-#include "glutenv.h"
 
-
-extern vector<RenderVertex> vertexArray;
-extern vector<GLuint> vertexArrayIndex;
 
 // debugging help
 void Vertex::teapot()
@@ -275,19 +271,6 @@ void Vertex::calcNormals()
 
 
 }
-
-//////// taken care of in Vertex::draw()
-//void Vertex::addToVertexArray()
-//{
-//    vertexArrayIndex = vertexArray.size();
-//    vertexArray.push_back( morphVertex );
-
-//    if( isSplit ){
-//        for( int i=0; i<9; ++i ) {
-//            vChild[i].addToVertexArray();
-//        }
-//    }
-//}
 
 int Vertex::calcAffectVerticies()
 {
@@ -786,21 +769,6 @@ void Vertex::draw()
 		teapot();
 		//morphVertex.drawNormal( bound.radius );
 #endif
-    // Add the vertex to the vertexArrayList
-    
-    // TODO: change renderVertex so that it's data types
-    // match openGL's datatypes, then make the vertex array
-    // store instances of rendervertex. Everything will 
-    // work faster that way.
-    
-    Camera *cam = getFlandPtr()->camera;
-
-    vertexArrayIndex = vertexArray.size();
-    vertexArray.push_back( morphVertex );
-    vertexArray[vertexArrayIndex].x -= cam->x;
-    vertexArray[vertexArrayIndex].y -= cam->y;
-    vertexArray[vertexArrayIndex].z -= cam->z;
-
 	BaseEnt::draw();
 
 }
@@ -949,12 +917,11 @@ int Vertex::drawLeft( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			#ifdef SPLIT_COLORS
 			glColor3f( 1.0, 1.0, 1.0 );
 			#endif
-//            glBegin( GL_TRIANGLES );
-
-			v1->addIndexToVertexArrayIndexList();
-			v2->addIndexToVertexArrayIndexList();
-			v3->addIndexToVertexArrayIndexList();
-//            glEnd();
+			glBegin( GL_TRIANGLES );
+			v1->morphVertex.printVertex();
+			v2->morphVertex.printVertex();
+			v3->morphVertex.printVertex();
+			glEnd();
 		break;
 
 		case 1:
@@ -963,19 +930,13 @@ int Vertex::drawLeft( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			glColor3f( 1.0, 0.0, 0.0 );
 			#endif
 
-			//glBegin( GL_TRIANGLE_FAN );
-				v1->vChild[2]->addIndexToVertexArrayIndexList();
-				v1->vChild[1]->addIndexToVertexArrayIndexList();
-				v2->addIndexToVertexArrayIndexList();
-
-				v1->vChild[2]->addIndexToVertexArrayIndexList();
-				v2->addIndexToVertexArrayIndexList();
-				v3->addIndexToVertexArrayIndexList();
-				
-				v1->vChild[2]->addIndexToVertexArrayIndexList();
-				v3->addIndexToVertexArrayIndexList();
-                v1->vChild[2]->addIndexToVertexArrayIndexList();
-			//glEnd();
+			glBegin( GL_TRIANGLE_FAN );
+				v1->vChild[2]->morphVertex.printVertex();
+				v1->vChild[1]->morphVertex.printVertex();
+				v2->morphVertex.printVertex();
+				v3->morphVertex.printVertex();
+				v1->vChild[2]->morphVertex.printVertex();
+			glEnd();
 			drawLeft( v1->vChild[4], v1->vChild[1], v1->vChild[2] );
 		break;
 
@@ -985,23 +946,14 @@ int Vertex::drawLeft( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			glColor3f( 1.0, 0.5, 0.0 );
 			#endif
 
-			//glBegin( GL_TRIANGLE_FAN );
-				v2->vChild[8]->addIndexToVertexArrayIndexList();
-				v2->vChild[5]->addIndexToVertexArrayIndexList();
-				v3->addIndexToVertexArrayIndexList();
-
-				v2->vChild[8]->addIndexToVertexArrayIndexList();
-				v3->addIndexToVertexArrayIndexList();
-				v1->addIndexToVertexArrayIndexList();
-				
-				v2->vChild[8]->addIndexToVertexArrayIndexList();
-				v1->addIndexToVertexArrayIndexList();
-                v2->vChild[7]->addIndexToVertexArrayIndexList();
-				
-				v2->vChild[8]->addIndexToVertexArrayIndexList();
-                v2->vChild[7]->addIndexToVertexArrayIndexList();
-                v2->vChild[5]->addIndexToVertexArrayIndexList();
-			//glEnd();
+			glBegin( GL_TRIANGLE_FAN );
+				v2->vChild[8]->morphVertex.printVertex();
+				v2->vChild[5]->morphVertex.printVertex();
+				v3->morphVertex.printVertex();
+				v1->morphVertex.printVertex();
+				v2->vChild[7]->morphVertex.printVertex();
+				v2->vChild[5]->morphVertex.printVertex();
+			glEnd();
 
 			// call the recursive function
 			drawLeft( v2->vChild[7], v2->vChild[4], v2->vChild[5] );
@@ -1013,19 +965,13 @@ int Vertex::drawLeft( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			glColor3f( 1.0, 1.0, 0.0 );
 			#endif
 
-//            glBegin( GL_TRIANGLE_FAN );
-				v2->vChild[8]->addIndexToVertexArrayIndexList();
-				v2->vChild[5]->addIndexToVertexArrayIndexList();
-				v3->addIndexToVertexArrayIndexList();
-
-				v2->vChild[8]->addIndexToVertexArrayIndexList();
-				v3->addIndexToVertexArrayIndexList();
-				v1->vChild[2]->addIndexToVertexArrayIndexList();
-				
-				v2->vChild[8]->addIndexToVertexArrayIndexList();
-				v1->vChild[2]->addIndexToVertexArrayIndexList();
-                v2->vChild[8]->addIndexToVertexArrayIndexList();
-//            glEnd();
+			glBegin( GL_TRIANGLE_FAN );
+				v2->vChild[8]->morphVertex.printVertex();
+				v2->vChild[5]->morphVertex.printVertex();
+				v3->morphVertex.printVertex();
+				v1->vChild[2]->morphVertex.printVertex();
+				v2->vChild[8]->morphVertex.printVertex();
+			glEnd();
 
 			drawLeft( v1->vChild[4], v1->vChild[1], v1->vChild[2] );
 			drawLeft( v1->vChild[1], v2->vChild[7], v2->vChild[8] );
@@ -1041,19 +987,13 @@ int Vertex::drawLeft( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			glColor3f( 0.0, 1.0, 0.0 );
 			#endif
 
-//            glBegin( GL_TRIANGLE_FAN );
-				v3->vChild[6]->addIndexToVertexArrayIndexList();
-				v1->addIndexToVertexArrayIndexList();
-				v2->addIndexToVertexArrayIndexList();
-
-				v3->vChild[6]->addIndexToVertexArrayIndexList();
-				v2->addIndexToVertexArrayIndexList();
-				v3->vChild[3]->addIndexToVertexArrayIndexList();
-				
-				v3->vChild[6]->addIndexToVertexArrayIndexList();
-				v3->vChild[3]->addIndexToVertexArrayIndexList();
-                v3->vChild[6]->addIndexToVertexArrayIndexList();
-//            glEnd();
+			glBegin( GL_TRIANGLE_FAN );
+				v3->vChild[6]->morphVertex.printVertex();
+				v1->morphVertex.printVertex();
+				v2->morphVertex.printVertex();
+				v3->vChild[3]->morphVertex.printVertex();
+				v3->vChild[6]->morphVertex.printVertex();
+			glEnd();
 			drawLeft( v3->vChild[6], v3->vChild[3], v3->vChild[4] );
 		break;
 
@@ -1063,19 +1003,13 @@ int Vertex::drawLeft( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			glColor3f( 0.0, 0.0, 1.0 );
 			#endif
 
-//            glBegin( GL_TRIANGLE_FAN );
-				v2->addIndexToVertexArrayIndexList();
-				v3->vChild[3]->addIndexToVertexArrayIndexList();
-				v3->vChild[6]->addIndexToVertexArrayIndexList();
-				
-				v2->addIndexToVertexArrayIndexList();
-				v3->vChild[6]->addIndexToVertexArrayIndexList();
-                v1->vChild[2]->addIndexToVertexArrayIndexList();
-
-				v2->addIndexToVertexArrayIndexList();
-                v1->vChild[2]->addIndexToVertexArrayIndexList();
-				v1->vChild[1]->addIndexToVertexArrayIndexList();
-//            glEnd();
+			glBegin( GL_TRIANGLE_FAN );
+				v2->morphVertex.printVertex();
+				v3->vChild[3]->morphVertex.printVertex();
+				v3->vChild[6]->morphVertex.printVertex();
+				v1->vChild[2]->morphVertex.printVertex();
+				v1->vChild[1]->morphVertex.printVertex();
+			glEnd();
 			drawLeft( v1->vChild[4], v1->vChild[1], v1->vChild[2] );
 			drawLeft( v3->vChild[6], v3->vChild[3], v3->vChild[4] );
 		break;
@@ -1086,19 +1020,13 @@ int Vertex::drawLeft( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			glColor3f( 0.7, 0.1, 1.0 );
 			#endif
 
-//            glBegin( GL_TRIANGLE_FAN );
-				v2->vChild[8]->addIndexToVertexArrayIndexList();
-				v3->vChild[6]->addIndexToVertexArrayIndexList();
-				v1->addIndexToVertexArrayIndexList();
-				
-				v2->vChild[8]->addIndexToVertexArrayIndexList();
-				v1->addIndexToVertexArrayIndexList();
-                v2->vChild[7]->addIndexToVertexArrayIndexList();
-
-				v2->vChild[8]->addIndexToVertexArrayIndexList();
-                v2->vChild[7]->addIndexToVertexArrayIndexList();
-				v2->vChild[8]->addIndexToVertexArrayIndexList();
-//            glEnd();
+			glBegin( GL_TRIANGLE_FAN );
+				v2->vChild[8]->morphVertex.printVertex();
+				v3->vChild[6]->morphVertex.printVertex();
+				v1->morphVertex.printVertex();
+				v2->vChild[7]->morphVertex.printVertex();
+				v2->vChild[8]->morphVertex.printVertex();
+			glEnd();
 
 			drawLeft( v2->vChild[7], v2->vChild[4], v2->vChild[5] );
 			drawLeft( v2->vChild[8], v2->vChild[5], v3->vChild[3] );
@@ -1155,11 +1083,11 @@ int Vertex::drawRight( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			glColor3f( 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0 );
 			#endif
 
-//            glBegin( GL_TRIANGLES );
-			v1->addIndexToVertexArrayIndexList();
-			v2->addIndexToVertexArrayIndexList();
-			v3->addIndexToVertexArrayIndexList();
-//            glEnd();
+			glBegin( GL_TRIANGLES );
+			v1->morphVertex.printVertex();
+			v2->morphVertex.printVertex();
+			v3->morphVertex.printVertex();
+			glEnd();
 		break;
 
 		case 1:
@@ -1168,19 +1096,13 @@ int Vertex::drawRight( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			glColor3f( 1.0 / 2.0, 0.0 / 2.0, 0.0 / 2.0 );
 			#endif
 
-//            glBegin( GL_TRIANGLE_FAN );
-				v1->vChild[6]->addIndexToVertexArrayIndexList();
-				v1->vChild[7]->addIndexToVertexArrayIndexList();
-				v2->addIndexToVertexArrayIndexList();
-				
-				v1->vChild[6]->addIndexToVertexArrayIndexList();
-				v2->addIndexToVertexArrayIndexList();
-                v3->addIndexToVertexArrayIndexList();
-
-				v1->vChild[6]->addIndexToVertexArrayIndexList();
-                v3->addIndexToVertexArrayIndexList();
-				v1->vChild[6]->addIndexToVertexArrayIndexList();
-//            glEnd();
+			glBegin( GL_TRIANGLE_FAN );
+				v1->vChild[6]->morphVertex.printVertex();
+				v1->vChild[7]->morphVertex.printVertex();
+				v2->morphVertex.printVertex();
+				v3->morphVertex.printVertex();
+				v1->vChild[6]->morphVertex.printVertex();
+			glEnd();
 			drawRight( v1->vChild[4], v1->vChild[7], v1->vChild[6] );
 		break;
 
@@ -1190,23 +1112,14 @@ int Vertex::drawRight( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			glColor3f( 1.0 / 2.0, 0.5 / 2.0, 0.0 / 2.0 );
 			#endif
 
-//            glBegin( GL_TRIANGLE_FAN );
-				v2->vChild[0]->addIndexToVertexArrayIndexList();
-				v2->vChild[3]->addIndexToVertexArrayIndexList();
-				v3->addIndexToVertexArrayIndexList();
-
-				v2->vChild[0]->addIndexToVertexArrayIndexList();
-				v3->addIndexToVertexArrayIndexList();
-				v1->addIndexToVertexArrayIndexList();
-				
-				v2->vChild[0]->addIndexToVertexArrayIndexList();
-				v1->addIndexToVertexArrayIndexList();
-                v2->vChild[1]->addIndexToVertexArrayIndexList();
-				
-				v2->vChild[0]->addIndexToVertexArrayIndexList();
-                v2->vChild[1]->addIndexToVertexArrayIndexList();
-                v2->vChild[3]->addIndexToVertexArrayIndexList();
-//            glEnd();
+			glBegin( GL_TRIANGLE_FAN );
+				v2->vChild[0]->morphVertex.printVertex();
+				v2->vChild[3]->morphVertex.printVertex();
+				v3->morphVertex.printVertex();
+				v1->morphVertex.printVertex();
+				v2->vChild[1]->morphVertex.printVertex();
+				v2->vChild[3]->morphVertex.printVertex();
+			glEnd();
 
 			// call the recursive function
 			drawRight( v2->vChild[1], v2->vChild[4], v2->vChild[3] );
@@ -1218,19 +1131,13 @@ int Vertex::drawRight( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			glColor3f( 1.0 / 2.0, 1.0 / 2.0, 0.0 / 2.0 );
 			#endif
 
-//            glBegin( GL_TRIANGLE_FAN );
-				v2->vChild[0]->addIndexToVertexArrayIndexList();
-				v2->vChild[3]->addIndexToVertexArrayIndexList();
-				v3->addIndexToVertexArrayIndexList();
-				
-				v2->vChild[0]->addIndexToVertexArrayIndexList();
-				v3->addIndexToVertexArrayIndexList();
-                v1->vChild[6]->addIndexToVertexArrayIndexList();
-
-				v2->vChild[0]->addIndexToVertexArrayIndexList();
-                v1->vChild[6]->addIndexToVertexArrayIndexList();
-				v2->vChild[0]->addIndexToVertexArrayIndexList();
-//            glEnd();
+			glBegin( GL_TRIANGLE_FAN );
+				v2->vChild[0]->morphVertex.printVertex();
+				v2->vChild[3]->morphVertex.printVertex();
+				v3->morphVertex.printVertex();
+				v1->vChild[6]->morphVertex.printVertex();
+				v2->vChild[0]->morphVertex.printVertex();
+			glEnd();
 
 			drawRight( v1->vChild[4], v1->vChild[7], v1->vChild[6] );
 			drawRight( v1->vChild[7], v2->vChild[1], v2->vChild[0] );
@@ -1246,19 +1153,13 @@ int Vertex::drawRight( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			glColor3f( 0.0 / 2.0, 1.0 / 2.0, 0.0 / 2.0 );
 			#endif
 
-//            glBegin( GL_TRIANGLE_FAN );
-				v3->vChild[2]->addIndexToVertexArrayIndexList();
-				v1->addIndexToVertexArrayIndexList();
-				v2->addIndexToVertexArrayIndexList();
-				
-				v3->vChild[2]->addIndexToVertexArrayIndexList();
-				v2->addIndexToVertexArrayIndexList();
-                v3->vChild[5]->addIndexToVertexArrayIndexList();
-
-				v3->vChild[2]->addIndexToVertexArrayIndexList();
-                v3->vChild[5]->addIndexToVertexArrayIndexList();
-				v3->vChild[2]->addIndexToVertexArrayIndexList();
-//            glEnd();
+			glBegin( GL_TRIANGLE_FAN );
+				v3->vChild[2]->morphVertex.printVertex();
+				v1->morphVertex.printVertex();
+				v2->morphVertex.printVertex();
+				v3->vChild[5]->morphVertex.printVertex();
+				v3->vChild[2]->morphVertex.printVertex();
+			glEnd();
 			drawRight( v3->vChild[2], v3->vChild[5], v3->vChild[4] );
 		break;
 
@@ -1268,19 +1169,13 @@ int Vertex::drawRight( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			glColor3f( 0.0 / 2.0, 0.0 / 2.0, 1.0 / 2.0 );
 			#endif
 
-//            glBegin( GL_TRIANGLE_FAN );
-				v2->addIndexToVertexArrayIndexList();
-				v3->vChild[5]->addIndexToVertexArrayIndexList();
-				v3->vChild[2]->addIndexToVertexArrayIndexList();
-
-				v2->addIndexToVertexArrayIndexList();
-				v3->vChild[2]->addIndexToVertexArrayIndexList();
-				v1->vChild[6]->addIndexToVertexArrayIndexList();
-				
-				v2->addIndexToVertexArrayIndexList();
-				v1->vChild[6]->addIndexToVertexArrayIndexList();
-                v1->vChild[7]->addIndexToVertexArrayIndexList();
-//            glEnd();
+			glBegin( GL_TRIANGLE_FAN );
+				v2->morphVertex.printVertex();
+				v3->vChild[5]->morphVertex.printVertex();
+				v3->vChild[2]->morphVertex.printVertex();
+				v1->vChild[6]->morphVertex.printVertex();
+				v1->vChild[7]->morphVertex.printVertex();
+			glEnd();
 			drawRight( v1->vChild[4], v1->vChild[7], v1->vChild[6] );
 			drawRight( v3->vChild[2], v3->vChild[5], v3->vChild[4] );
 		break;
@@ -1291,19 +1186,13 @@ int Vertex::drawRight( BaseEnt* b1, BaseEnt* b2, BaseEnt* b3 )
 			glColor3f( 0.0 / 7.0, 0.0 / 2.0, 1.0 / 2.0 );
 			#endif
 
-//            glBegin( GL_TRIANGLE_FAN );
-				v2->vChild[0]->addIndexToVertexArrayIndexList();
-				v3->vChild[2]->addIndexToVertexArrayIndexList();
-				v1->addIndexToVertexArrayIndexList();
-				
-				v2->vChild[0]->addIndexToVertexArrayIndexList();
-				v1->addIndexToVertexArrayIndexList();
-                v2->vChild[1]->addIndexToVertexArrayIndexList();
-
-				v2->vChild[0]->addIndexToVertexArrayIndexList();
-                v2->vChild[1]->addIndexToVertexArrayIndexList();
-				v2->vChild[0]->addIndexToVertexArrayIndexList();
-//            glEnd();
+			glBegin( GL_TRIANGLE_FAN );
+				v2->vChild[0]->morphVertex.printVertex();
+				v3->vChild[2]->morphVertex.printVertex();
+				v1->morphVertex.printVertex();
+				v2->vChild[1]->morphVertex.printVertex();
+				v2->vChild[0]->morphVertex.printVertex();
+			glEnd();
 
 			drawRight( v3->vChild[2], v3->vChild[5], v3->vChild[4] );
 			drawRight( v2->vChild[0], v2->vChild[3], v3->vChild[5] );

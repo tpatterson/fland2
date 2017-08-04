@@ -5,13 +5,7 @@ using namespace std;
 
 #include <sstream>
 #include <math.h>
-
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
+#include "glut.h"
 #include "camera.h"
 #include "fland.h"
 #include "main.h"

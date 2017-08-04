@@ -1,0 +1,52 @@
+averager.o: averager.cpp baserule.h defines.h tyler.h vertex.h \
+  rendervertex.h glut.h camera.h fland.h env.h baseent.h groupr.h \
+  templates.h main.h averager.h
+baseent.o: baseent.cpp tyler.h fland.h defines.h env.h camera.h baseent.h \
+  rendervertex.h glut.h groupr.h baserule.h templates.h
+baserule.o: baserule.cpp tyler.h baserule.h defines.h fmlparser.h \
+  fmlutils.h baseent.h rendervertex.h glut.h camera.h fland.h env.h \
+  groupr.h templates.h
+buildhtml.o: buildhtml.cpp fland.h defines.h env.h baseent.h \
+  rendervertex.h glut.h camera.h tyler.h groupr.h baserule.h templates.h \
+  buildhtml.h
+camera.o: camera.cpp glut.h camera.h tyler.h fland.h defines.h env.h \
+  main.h
+colorshiftr.o: colorshiftr.cpp baserule.h defines.h templates.h tyler.h \
+  vertex.h rendervertex.h glut.h camera.h fland.h env.h baseent.h \
+  groupr.h main.h colorshiftr.h
+descriminatoryr.o: descriminatoryr.cpp groupr.h baserule.h defines.h \
+  templates.h tyler.h descriminatoryr.h
+drules.o: drules.cpp baseent.h defines.h rendervertex.h glut.h camera.h \
+  tyler.h fland.h env.h groupr.h baserule.h templates.h vertex.h main.h \
+  drules.h descriminatoryr.h
+env.o: env.cpp env.h glutenv.h glut.h main.h defines.h fland.h events.h
+events.o: events.cpp glut.h events.h main.h defines.h fland.h env.h \
+  camera.h tyler.h baseent.h rendervertex.h groupr.h baserule.h \
+  templates.h buildhtml.h glutenv.h
+fland.o: fland.cpp glutenv.h glut.h main.h defines.h fland.h env.h \
+  events.h baseent.h rendervertex.h camera.h tyler.h groupr.h baserule.h \
+  templates.h fmlparser.h fmlutils.h vertex.h meshseed.h buildhtml.h
+fmlparser.o: fmlparser.cpp fmlparser.h fmlutils.h defines.h tyler.h \
+  baserule.h groupr.h templates.h averager.h roughr.h vertex.h \
+  rendervertex.h glut.h camera.h fland.h env.h baseent.h main.h \
+  colorshiftr.h drules.h descriminatoryr.h
+fmlutils.o: fmlutils.cpp fmlutils.h
+glutenv.o: glutenv.cpp glut.h main.h defines.h fland.h env.h events.h \
+  glutenv.h
+groupr.o: groupr.cpp groupr.h baserule.h defines.h templates.h tyler.h \
+  fmlparser.h fmlutils.h baseent.h rendervertex.h glut.h camera.h \
+  fland.h env.h
+main.o: main.cpp defines.h main.h fland.h env.h camera.h tyler.h events.h \
+  glut.h glutenv.h
+meshseed.o: meshseed.cpp meshseed.h baseent.h defines.h rendervertex.h \
+  glut.h camera.h tyler.h fland.h env.h groupr.h baserule.h templates.h \
+  vertex.h main.h glutenv.h events.h
+rendervertex.o: rendervertex.cpp glut.h tyler.h camera.h fland.h \
+  defines.h env.h rendervertex.h
+roughr.o: roughr.cpp tyler.h vertex.h rendervertex.h glut.h defines.h \
+  camera.h fland.h env.h baseent.h groupr.h baserule.h templates.h \
+  main.h roughr.h
+tyler.o: tyler.cpp tyler.h
+vertex.o: vertex.cpp glut.h tyler.h rendervertex.h defines.h camera.h \
+  fland.h env.h baseent.h groupr.h baserule.h templates.h main.h \
+  vertex.h

@@ -13,7 +13,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <typeinfo>
-#include "tyler.h"
 #include "fmlutils.h"
 
 
@@ -21,17 +20,13 @@
 using namespace std;
 
 
-TextFile::TextFile( string inFileName, string inFolder )
+
+TextFile::TextFile( string inFileName )
 {
 	file = NULL;
 
-    string newFolder = tokenize2( inFileName, "/" );
-    folder = inFolder;
-    if( newFolder != "" )
-        folder = inFolder + newFolder + "/";
-
 	line = 0;
-	fileName = folder + inFileName + '\0';
+	fileName = inFileName + '\0';
 
 	FILE *fp;
 	fp = fopen(fileName.data(), "r");
@@ -186,26 +181,6 @@ string tokenizer( string &inString, string delimiter )
 		ret = inString.substr( x, inString.length() - x );
 		int chop = ret.length() + delimiter.length();
 		inString = inString.substr( 0, inString.length() - chop );
-	}
-	return ret;
-}
-
-string tokenize2( string &inString, string delimiter )
-{
-
-	int x = inString.find( delimiter );
-
-	string ret;
-
-	if( x == string::npos )
-	{
-		//inString = "";
-	}
-	else
-	{
-		ret = inString.substr( 0, x );
-		int chop = x + delimiter.length();
-		inString = inString.substr( chop, inString.length() - chop );
 	}
 	return ret;
 }

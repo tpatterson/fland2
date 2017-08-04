@@ -5,11 +5,7 @@ using namespace std;
 
 // events handles all events from GLUT and sends them to the right place
 
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
+#include "glut.h"
 
 enum MENU_OPTIONS { QUIT_PROGRAM, DUMP_SPECS, RESET_VIEW, DUMP_ENVIRONMENT,
 						  RESET_FLAND, FULL_SCREEN, RANDOMIZE_LAND };

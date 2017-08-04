@@ -4,7 +4,7 @@
 
 using namespace std;
 
-#include <GL/glut.h>
+#include "glut.h"
 #include <math.h>
 #include <iomanip>
 #include <sstream>
@@ -13,7 +13,6 @@ using namespace std;
 #include "camera.h"
 #include "fland.h"
 #include "rendervertex.h"
-#include "glutenv.h"
 
 
 BoundSphere::BoundSphere()
@@ -21,22 +20,18 @@ BoundSphere::BoundSphere()
 	initalize();
 }
 
-// An example of how to use project-wide global variables.
-// the keyword 'extern' here tells the compiler not to allocate
-// memory for these vars because they are defined elsewhere.
-extern vector<RenderVertex> vertexArray;
-extern vector<GLuint> vertexArrayIndex;
+void RenderVertex::printVertex()
+{
+	Camera *cam = getFlandPtr()->camera;
+	glColor3f( red, green, blue );
+	glNormal3f( nx, ny, nz );
+	glVertex3d( x - cam->x, y - cam->y, z - cam->z );
 
-//void RenderVertex::printVertex()
-//{
-//    Camera *cam = getFlandPtr()->camera;
-
-//    glColor3f( red, green, blue );
-//    glNormal3f( nx, ny, nz );
-//    glVertex3d( x - cam->x, y - cam->y, z - cam->z );
-
-//    int i = vertexArray.size();
-//}
+	//if( abs(x) > .7 || abs(z) > .7 )
+	//{
+	//	cout << toString(0);LN
+	//}
+}
 
 string RenderVertex::toString( int depth )
 {
@@ -48,13 +43,13 @@ string RenderVertex::toString( int depth )
 		<< ind << "\tx: " << x
 		<< ind << "\ty: " << y
 		<< ind << "\tz: " << z
-        << ind << "\n\t  nx      " << nx
-        << ind << "\n\t  ny      " << ny
-        << ind << "\n\t  nz      " << nz
-        << ind << "\n\t  red     " << red
-        << ind << "\n\t  green   " << green
-        << ind << "\n\t  blue    " << blue
-        << ind << endl
+		//<< ind << "\n\t  nx      " << nx
+		//<< ind << "\n\t  ny      " << ny
+		//<< ind << "\n\t  nz      " << nz
+		//<< ind << "\n\t  red     " << red
+		//<< ind << "\n\t  green   " << green
+		//<< ind << "\n\t  blue    " << blue
+		//<< ind << endl
 		;
 	return out.str();
 }

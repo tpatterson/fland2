@@ -138,7 +138,6 @@ void BuildDiagnosticHtml::buildHtml( Fland* fland )
 	<< "<script language='javascript' src='html/functions.js'></script>"
 	<< "<title>Fland Diagnostic Output</title></head>\n<body>\n";
 	ifile << "<b>Fland Diagnostic Output</b><br>\n";
-    ifile << "iteration ruleName-intensity<br>\n";
 	maxRow = 0;
 	int numEntities = fland->firstEnt->getCount( maxRow );
 	ifile << numEntities << " Entities<br>\n" << maxRow << " Iterations Deep<br>\n";

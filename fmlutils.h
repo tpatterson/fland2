@@ -12,11 +12,7 @@ class TextFile
 	int line;
 	string fileName;
 
-    // folders work recursively, if you include a file from a file, 
-    // the path is relative to the file it was included from.
-    string folder;
-
-	TextFile( string inFileName = "", string inFolder = "" );
+	TextFile( string inFileName = "" );
 
 	~TextFile();
 
@@ -64,10 +60,6 @@ string tokenize( string &inString, string delimiter );
 // takes a string, breaks off the LAST occurence of token, and returns the token.
 // the origional string is changed
 string tokenizer( string &inString, string delimiter );
-
-// similar to tokenize, but if the token is not found then 
-// nothing will be changed.
-string tokenize2( string &inString, string delimiter );
 
 string addQuotes( string inStr );
 

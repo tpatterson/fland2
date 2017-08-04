@@ -2,7 +2,6 @@
 #define MESHSEED_CPP
 
 #include <cassert>
-#include <GL/glut.h>
 #include "meshseed.h"
 #include "defines.h"
 #include "tyler.h"
@@ -134,12 +133,6 @@ void MeshSeed::draw()
 		sassert( vChild[2] );
 		sassert( vChild[3] );
 
-        // refresh the vertexArray to contain valid data of every vertex object
-        vertexArray.clear();
-        vertexArrayIndexList.clear();
-
-		// pass the draw message down the line.
-		BaseEnt::draw();
 
 		vChild[0]->drawLeft( vChild[2],
 						vChild[0],
@@ -153,26 +146,8 @@ void MeshSeed::draw()
 		//VERT( vChild[2] )->teapot();
 		//VERT( vChild[3] )->teapot();
 
-
-        glVertexPointer(    3,
-                            GL_FLOAT,
-                            sizeof(RenderVertex),
-                            &vertexArray[0].x
-                        );
-        glColorPointer(     3,
-                            GL_FLOAT,
-                            sizeof(RenderVertex),
-                            &vertexArray[0].red
-                        );
-        glNormalPointer(    GL_FLOAT,
-                            sizeof(RenderVertex),
-                            &vertexArray[0].nx
-                        );
-        glDrawElements( GL_TRIANGLES,
-                        vertexArrayIndexList.size(),
-                        GL_UNSIGNED_INT,
-                        &vertexArrayIndexList[0]
-                );
+		// pass the draw message down the line.
+		BaseEnt::draw();
 	}
 	else
 	{

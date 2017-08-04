@@ -2,23 +2,18 @@
 #define GLUTENV_CPP
 
 using namespace std;
-#include <GL/glut.h>
+#include "glut.h"
 
 #include "main.h"
 #include "events.h"
 #include "defines.h"
 #include "glutenv.h"
-#include "rendervertex.h"
 
 // These functions are to be used by the main program
 // If you want to use a system other then GLUT you need to rewrite this file
 // keeping these functions the same.
 // ALSO: Make sure the callback functions have the right parameters.
 
-
-
-vector<RenderVertex> vertexArray;
-vector<GLuint> vertexArrayIndexList;
 
 // These functions use the GLUT environment.
 
@@ -128,14 +123,6 @@ int initGraphics(int argc, char** argv)
 	glFogi(GL_FOG_MODE, GL_LINEAR);
 	glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
 	glHint( GL_FOG_HINT, GL_NICEST );
-
-    // set up displaylist stuff
-    glEnableClientState( GL_VERTEX_ARRAY );
-    glEnableClientState( GL_COLOR_ARRAY );
-    glEnableClientState( GL_NORMAL_ARRAY );
-
-
-    cout << "&VertexArray[0]: " << &vertexArray[0];LN
 
    return 0;
 }

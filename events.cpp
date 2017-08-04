@@ -2,12 +2,7 @@
 #define EVENTS_CPP
 // This file has all the callback functions for event handling.
 
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
+#include "glut.h"
 #include <fstream>
 #include <iostream>
 #include <string>

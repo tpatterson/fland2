@@ -24,7 +24,7 @@ rule=sloper
 	name=moss
 	threshold1=.2
 	threshold2=.4
-	numpropogates=2 hax hax hax
+	numpropogates=2
 	groupmember=mosscolor
 	groupmember=notmosscolor
 /rule
