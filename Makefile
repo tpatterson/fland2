@@ -27,4 +27,3 @@ run: compile
 
 depend:	./makeIncludesMake.pl; g++ -E -MM *.cpp > .depend
 
-#include .depend
