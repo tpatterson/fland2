@@ -1,8 +1,6 @@
 #ifndef CAMERA_CPP
 #define CAMERA_CPP
 
-using namespace std;
-
 #include <sstream>
 #include <math.h>
 #include "glut.h"
@@ -10,6 +8,8 @@ using namespace std;
 #include "fland.h"
 #include "main.h"
 #include "tyler.h"
+
+using namespace std;
 
 void Camera::setNearFarPlanes( double nearest, double farthest )
 {
@@ -78,7 +78,7 @@ string Camera::toString( int depth = 0 )
 
 void Camera::calcFrustum()
 {
-   double   proj[16];
+   double   proj[16];  
    double   modl[16];
    double   clip[16];
    double   t;    /* Get the current PROJECTION matrix from OpenGL */
@@ -248,17 +248,17 @@ Camera::Camera()
 
 void Camera::resetView()
 {
-	x = y = z = rotY = rotX = rotZ = speed = 0.0;
+	x = y = z = rotX = rotZ = speed = 0.0;
 	farPercentage = 200;
 	viewAngle = 1.5;
 	near = 0.0001; // just for now
 	far = 600; // ditto
 	speed = 0.0;
 	vertSpeed = 0;
-	sideSpeed = 0;
+	sideSpeed = 0; 
 //	rotX = 2.1;
 	rotZ = 0.0;
-//	rotY = -15.6;
+	rotY = 44.0;
 //	x = 0.0;
 	y = 0.1;
 //	z = 2.0;

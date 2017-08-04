@@ -9,10 +9,6 @@ print="Starting compiling fml files..."
 //this is how we include things.
 //include="mountain.fml"
 
-//At the moment lone statements that make no sense aren't caught. The below line should (but doesn't) warn the user.
-asdkfhaskldhlfalskjdfhlaskjdfh
-//TODO: fix this!
-
 // TODO: if a descriminatoryR is defined but the groupmembers are never added then
 // it seg-faults when it goes to use it. The fmlparser should scan for this and fix it.
 

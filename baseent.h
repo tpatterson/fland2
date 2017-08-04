@@ -27,15 +27,7 @@ class BaseEnt
 	// Each entity has a list of children.
 	vector< BaseEnt* > child;
 
-	// Each entity has 2 vectors of rules. The meRules are run on a new entity as
-	// soon as it has been created. the splitrules are run when it is split, to create
-	// children.
-	//vector< BaseRule* > meRule;
-	//vector< BaseRule* > splitRule;
-	//GroupR* meRule;
-	//GroupR* splitRule;
-
-	// Nope. We decided to give each entity one of these.
+	// Each entity has a list of rules
 	vector< RulePointer > rules;
 
 	// adds a rule to the vector of rules.
