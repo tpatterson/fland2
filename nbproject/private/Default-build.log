@@ -1,0 +1,5 @@
+ccache g++ -v -framework GLUT -framework OpenGL -lpthread -std=c++11 -o fland `-I/usr/X11/inclues/X11/extensions`  averager.o baseent.o baserule.o buildhtml.o camera.o colorshiftr.o descriminatoryr.o drules.o env.o events.o fland.o fmlparser.o fmlutils.o glutenv.o groupr.o main.o meshseed.o rendervertex.o roughr.o tyler.o vertex.o  `-L/usr/X11/lib`
+/bin/sh: -I/usr/X11/inclues/X11/extensions: No such file or directory
+/bin/sh: -L/usr/X11/lib: No such file or directory
+/bin/sh: ccache: command not found
+make: *** [compile] Error 127

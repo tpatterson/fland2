@@ -17,6 +17,8 @@ using namespace std;
 #include "buildhtml.h"
 #include "camera.h"
 #include "defines.h"
+#include "biome.h"
+#include "biomeholder.h"
 
 Fland* Fland::fland;
 
@@ -112,6 +114,13 @@ Fland::Fland( int inSeed )
 		LN
 	}
 
+        // Add the biome tree
+        Biome* rootBiomePointer = new Biome(NULL);
+        rootBiomePointer->makeInitialBiome();
+        BiomeHolder* bPointer = new BiomeHolder();
+        bPointer->setBiome(rootBiomePointer);
+        bPointer->setIntensity(1.0);
+        firstEnt->biomes.push_back(*bPointer);
 }
 
 Fland::~Fland()

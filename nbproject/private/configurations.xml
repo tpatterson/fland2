@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="fml">
+      </df>
+      <in>averager.cpp</in>
+      <in>averager.h</in>
+      <in>baseent.cpp</in>
+      <in>baseent.h</in>
+      <in>baserule.cpp</in>
+      <in>baserule.h</in>
+      <in>biome.cpp</in>
+      <in>biome.h</in>
+      <in>biomeholder.cpp</in>
+      <in>biomeholder.h</in>
+      <in>buildhtml.cpp</in>
+      <in>buildhtml.h</in>
+      <in>camera.cpp</in>
+      <in>camera.h</in>
+      <in>colorshiftr.cpp</in>
+      <in>colorshiftr.h</in>
+      <in>defines.h</in>
+      <in>descriminatoryr.cpp</in>
+      <in>descriminatoryr.h</in>
+      <in>drules.cpp</in>
+      <in>drules.h</in>
+      <in>env.cpp</in>
+      <in>env.h</in>
+      <in>events.cpp</in>
+      <in>events.h</in>
+      <in>fland.cpp</in>
+      <in>fland.h</in>
+      <in>fmlparser.cpp</in>
+      <in>fmlparser.h</in>
+      <in>fmlutils.cpp</in>
+      <in>fmlutils.h</in>
+      <in>glut.h</in>
+      <in>glutenv.cpp</in>
+      <in>glutenv.h</in>
+      <in>groupr.cpp</in>
+      <in>groupr.h</in>
+      <in>main.cpp</in>
+      <in>main.h</in>
+      <in>meshseed.cpp</in>
+      <in>meshseed.h</in>
+      <in>rendervertex.cpp</in>
+      <in>rendervertex.h</in>
+      <in>roughr.cpp</in>
+      <in>roughr.h</in>
+      <in>templates.h</in>
+      <in>tyler.cpp</in>
+      <in>tyler.h</in>
+      <in>vertex.cpp</in>
+      <in>vertex.h</in>
+    </df>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>4</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>

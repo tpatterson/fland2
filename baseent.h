@@ -7,6 +7,8 @@ using namespace std;
 #include "rendervertex.h"
 #include "groupr.h"
 #include "templates.h"
+#include "biome.h"
+#include "biomeholder.h"
 
 class BaseRule;
 class RulePointer;
@@ -27,6 +29,9 @@ class BaseEnt
 	// Each entity has a list of children.
 	vector< BaseEnt* > child;
 
+        // List of Biomes
+        vector< BiomeHolder > biomes;
+        
 	// Each entity has a list of rules
 	vector< RulePointer > rules;
 
