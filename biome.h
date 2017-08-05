@@ -18,6 +18,14 @@
 #include "defines.h"
 using namespace std;
 
+// These constants are to make things simple, by propagating all biomes exactly the same way.
+
+// A biome will apply to this many generations of vertices when they split
+#define APPLY_NUM_GENERATIONS = 3
+
+// A biome's children will start to apply after this many generations
+#define GENERATIONS_BEFORE_CHILD_RULES_APPLY = 2
+
 class Biome
 {
 public:
